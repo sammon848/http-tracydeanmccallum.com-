@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McCallum & Friends - AI Solutions</title>
+<style>
+  body {
+    background-color: blue;
+    overflow: hidden; /* Hide scrollbars */
+    font-family: sans-serif; /* Choose a modern font */
+    color: white; /* Set text color to white */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure full viewport height */
+    margin: 0; /* Remove default body margins */
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 3em;
+    margin-bottom: 0.2em;
+  }
+
+  p {
+    font-size: 1.5em;
+    margin-top: 0;
+  }
+
+  .floating {
+    position: absolute;
+    font-size: 2em;
+    animation: float 8s linear infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(10vw, 15vh);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  /* Add more floating classes with different paths and speeds */
+  .floating-2 {
+    animation: float 10s linear infinite;
+  }
+
+  .floating-3 {
+    animation: float 12s linear infinite;
+    font-size: 3em;
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>McCallum & Friends</h1>
+    <p>Working with AI</p>
+  </div>
+
+  <span class="floating">$</span>
+  <span class="floating floating-2">$</span>
+  <span class="floating floating-3">$</span>
+  </body>
+</html>
