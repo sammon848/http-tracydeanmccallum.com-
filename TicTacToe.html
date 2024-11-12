@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tic Tac Toe</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  width: 310px;
+  height: 310px;
+  margin: 50px auto;
+  border: 5px solid #333;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  font-weight: bold;
+  background-color: #eee; 
+  cursor: pointer;
+  border: 1px solid #ccc;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cell:hover {
+  background-color: #ddd; 
+}
+
+.message {
+  font-size: 20px; 
+  margin-top: 20px; 
+}
+
+</style>
+</head>
+<body>
+<h1>Tic Tac Toe</h1>
+<div class="board"></div>
+<p class="message"></p>
+<button onclick="resetGame()">Reset</button>
+
+<script>
+const board = document.querySelector(".board");
+const message = document.querySelector(".message");
+const resetButton = document.querySelector("button");
+
+let currentPlayer = "X";
+let gameActive = true;
+let gameState = ["", "", "", "", "", "", "", "", ""];
+
+const winningCombinations = [
+  [0, 1, 2], [3, 4, 5], [6, 7, 8],
+  [0, 3, 6], [1, 4, 7], [2, 5, 8],
+  [0, 4, 8], [2, 4, 6]
+];
+
+function handleCellClick(e) {
+  const cell = e.target;
+  const cellIndex = parseInt(cell.getAttribute("data-cell-index"));
+
+  if (gameState[cellIndex] !== "" || !gameActive) {
+    return;
+  }
+
+  gameState[cellIndex] = currentPlayer;
+  cell.textContent = currentPlayer;
+  cell.style.backgroundColor = "#ccc"; 
+
+  checkResult();
+  togglePlayer();
+}
+
+function checkResult() {
+  let roundWon = false;
+  for (let i = 0; i < winningCombinations.length; i++) {
+    const [a, b, c] = winningCombinations[i];
+    const val1 = gameState[a];
+    const val2 = gameState[b];
+    const val3 = gameState[c];
+
+    if (val1 === "" || val2 === "" || val3 === "") {
+      continue;
+    }
+    if (val1 === val2 && val2 === val3) {
+      roundWon = true;
+      break;
+    }
+  }
+
+  if (roundWon) {
+    gameActive = false;
+    message.textContent = `Player ${currentPlayer} wins!`;
+    return;
+  }
+
+  if (!gameState.includes("")) {
+    gameActive = false;
+    message.textContent = "It's a draw!";
+    return;
+  }
+}
+
+function togglePlayer() {
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+}
+
+function resetGame() {
+  currentPlayer = "X";
+  gameActive = true;
+  gameState = ["", "", "", "", "", "", "", "", ""];
+  message.textContent = "";
+  const cells = document.querySelectorAll(".cell");
+  cells.forEach(cell => {
+    cell.textContent = "";
+    cell.style.backgroundColor = "#eee"; 
+  });
+}
+
+function createBoard() {
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    cell.setAttribute("data-cell-index", i);
+    cell.addEventListener("click", handleCellClick);
+    board.appendChild(cell);
+  }
+}
+
+createBoard();
+</script>
+</body>
+</html>
